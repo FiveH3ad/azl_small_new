@@ -2,6 +2,139 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "hubName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the hub to deploy."
+            },
+            "defaultValue": "vnet-prod-nch-hub-001"
+        },
+        "mgmtRg": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the management resource group to deploy."
+            },
+            "defaultValue": "rg-prod-shared-001"
+        },
+        "connectivityRg": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the connectivity resource group to deploy."
+            },
+            "defaultValue": "rg-prod-network-001"
+        },
+        "ddosRg": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the DDoS resource group to deploy."
+            },
+            "defaultValue": "rg-prod-ddos-001"
+        },
+        "privateDnsRg": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the private DNS resource group to deploy."
+            },
+            "defaultValue": "rg-prod-dns-001"
+        },
+        "lzVnetRg": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the landing zone vnet resource group to deploy."
+            },
+            "defaultValue": "rg-prod-network-001"
+        },
+        "logAnalyticsWorkspace": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the Log Analytics workspace to deploy."
+            },
+            "defaultValue": "law-prod-nch-001"
+        },
+        "dataCollectionRuleVmInsights": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the data collection rule for VM insights to deploy."
+            },
+            "defaultValue": "dcr-prod-nch-vminsights-001"
+        },
+        "dataCollectionRuleChangeTracking": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the data collection rule for change tracking to deploy."
+            },
+            "defaultValue": "dcr-prod-nch-changetracking-001"
+        },
+        "dataCollectionRuleMdfcDefenderSql": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the data collection rule for MDFC Defender SQL to deploy."
+            },
+            "defaultValue": "dcr-prod-nch-defendersql-001"
+        },
+        "userAssignedIdentity": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the user assigned identity to deploy."
+            },
+            "defaultValue": "id-prod-nch-ama-001"
+        },
+        "automationAccount": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the automation account to deploy."
+            },
+            "defaultValue": "aa-prod-nch-001"
+        },
+        "vpnGwName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the VPN gateway to deploy."
+            },
+            "defaultValue": "vpngw-prod-nch-001"
+        },
+        "erGwName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the ExpressRoute gateway to deploy."
+            },
+            "defaultValue": "ergw-prod-nch-001"
+        },
+        "ddosName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the DDoS protection plan to deploy."
+            },
+            "defaultValue": "ddos-prod-nch-001"
+        },
+        "azFwPolicyName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the Azure Firewall policy to deploy."
+            },
+            "defaultValue": "fwp-prod-nch-001"
+        },
+        "azFwName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the Azure Firewall to deploy."
+            },
+            "defaultValue": "fw-prod-nch-001"
+        },
+        "vwanName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the virtual WAN to deploy."
+            },
+            "defaultValue": "vwan-prod-nch-001"
+        },
+        "lzVnet": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the landing zone vnet to deploy."
+            },
+            "defaultValue": "vnet-prod-nch-001"
+        },
         "enterpriseScaleCompanyPrefix": {
             "type": "string",
             "maxLength": 10,
@@ -1088,33 +1221,33 @@
         },
         // Declaring deterministic names for Resource Groups that will be created for platform resources
         "platformRgNames": {
-            "mgmtRg": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-mgmt')]",
-            "connectivityRg": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-vnethub-', parameters('connectivityLocation'))]",
-            "ddosRg": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-ddos')]",
-            "privateDnsRg": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-privatedns')]",
+            "mgmtRg": "[parameters('mgmtRg')]",
+            "connectivityRg": "[parameters('connectivityRg')]",
+            "ddosRg": "[parameters('ddosRg')]",
+            "privateDnsRg": "[parameters('privateDnsRg')]",
             "identityVnetRg": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-vnet-', parameters('connectivityLocation'))]",
-            "lzVnetRg": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-vnet-', parameters('connectivityLocation'))]"
+            "lzVnetRg": "[parameters('lzVnetRg')]"
         },
         // Declaring deterministic names for platform resources that will be created
         "platformResourceNames": {
-            "logAnalyticsWorkspace": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-law')]",
-            "dataCollectionRuleVmInsights": "[concat('dcr-vminsights-prod-', parameters('connectivityLocation'), '-001')]",
-            "dataCollectionRuleChangeTracking": "[concat('dcr-changetracking-prod-', parameters('connectivityLocation'), '-001')]",
-            "dataCollectionRuleMdfcDefenderSql": "[concat('dcr-defendersql-prod-', parameters('connectivityLocation'), '-001')]",
-            "userAssignedIdentity": "[concat('id-ama-prod-', parameters('connectivityLocation'), '-001')]",
-            "automationAccount": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-aauto')]",
-            "vpnGwName": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-vpngw-', parameters('connectivityLocation'))]",
-            "erGwName": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-ergw-', parameters('connectivityLocation'))]",
-            "ddosName": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-ddos-', parameters('connectivityLocation'))]",
-            "azFwPolicyName": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-azfwpolicy-', parameters('connectivityLocation'))]",
-            "azFwName": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-fw-', parameters('connectivityLocation'))]",
+            "logAnalyticsWorkspace": "[parameters('logAnalyticsWorkspace')]",
+            "dataCollectionRuleVmInsights": "[parameters('dataCollectionRuleVmInsights')]",
+            "dataCollectionRuleChangeTracking": "[parameters('dataCollectionRuleChangeTracking')]",
+            "dataCollectionRuleMdfcDefenderSql": "[parameters('dataCollectionRuleMdfcDefenderSql')]",
+            "userAssignedIdentity": "[parameters('userAssignedIdentity')]",
+            "automationAccount": "[parameters('automationAccount')]",
+            "vpnGwName": "[parameters('vpnGwName')]",
+            "erGwName": "[parameters('erGwName')]",
+            "ddosName": "[parameters('ddosName')]",
+            "azFwPolicyName": "[parameters('azFwPolicyName')]",
+            "azFwName": "[parameters('azFwName')]",
             "azErGwIpName": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-erpip-', parameters('connectivityLocation'))]",
-            "hubName": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-hub-', parameters('connectivityLocation'))]",
-            "vwanName": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-vwan-', parameters('connectivityLocation'))]",
+            "hubName": "[parameters('hubName')]",
+            "vwanName": "[parameters('vwanName')]",
             "azVpnGwIpName": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-gwpip-', parameters('connectivityLocation'))]",
             "azFwIpName": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-fwpip-', parameters('connectivityLocation'))]",
             "identityVnet": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-vnet-', parameters('connectivityLocation'))]",
-            "lzVnet": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-vnet-', parameters('connectivityLocation'))]"
+            "lzVnet": "[parameters('lzVnet')]"
         },
         // Declaring deterministic resourceId's for platform resources that will be created
         "singleVsDedicatedMgmtSub": "[if(empty(parameters('managementSubscriptionId')), parameters('singlePlatformSubscriptionId'), parameters('managementSubscriptionId'))]",
@@ -5049,6 +5182,24 @@
                     },
                     "erRegionalSku": {
                         "value": "[parameters('erRegionalSku')]"
+                    },
+                    "hubName": {
+                        "value": "[variables('platformResourceNames').hubName]"
+                    },
+                    "vpnGwName": {
+                        "value": "[variables('platformResourceNames').vpnGwName]"
+                    },
+                    "erGwName": {
+                        "value": "[variables('platformResourceNames').erGwName]"
+                    },
+                    "rgName": {
+                        "value": "[variables('platformRgNames').connectivityRg]"
+                    },
+                    "azFwPolicyName": {
+                        "value": "[variables('platformResourceNames').azFwPolicyName]"
+                    },
+                    "azFwName": {
+                        "value": "[variables('platformResourceNames').azFwName]"
                     }
                 }
             }
