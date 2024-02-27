@@ -5279,6 +5279,24 @@
                     },
                     "erRegionalSku": {
                         "value": "[parameters('erRegionalSku')]"
+                    },
+                    "hubName": {
+                        "value": "[variables('platformResourceNames').hubName]"
+                    },
+                    "vpnGwName": {
+                        "value": "[variables('platformResourceNames').vpnGwName]"
+                    },
+                    "erGwName": {
+                        "value": "[variables('platformResourceNames').erGwName]"
+                    },
+                    "rgName": {
+                        "value": "[variables('platformRgNames').connectivityRg]"
+                    },
+                    "azFwPolicyName": {
+                        "value": "[variables('platformResourceNames').azFwPolicyName]"
+                    },
+                    "azFwName": {
+                        "value": "[variables('platformResourceNames').azFwName]"
                     }
                 }
             }

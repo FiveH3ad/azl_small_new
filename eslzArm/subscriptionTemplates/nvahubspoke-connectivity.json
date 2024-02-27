@@ -120,16 +120,28 @@
         "ddosPlanResourceId": {
             "type": "string"
         },
+        "vpnGwName": {
+            "type": "string",
+            "defaultValue": "vpngw-prod-nch-001"
+        },
+        "erGwName": {
+            "type": "string",
+            "defaultValue": "ergw-prod-nch-001"
+        },
+        "rgName": {
+            "type": "string",
+            "defaultValue": "rg-prod-network-001"
+        },
         "hubName": {
             "type": "string",
-            "defaultValue": ""
+            "defaultValue": "vnet-prod-nch-hub-001"
         }
     },
     "variables": {
-        "vpngwname": "[concat(parameters('topLevelManagementGroupPrefix'), '-vpngw-', parameters('location'))]",
-        "erGwName": "[concat(parameters('topLevelManagementGroupPrefix'), '-ergw-', parameters('location'))]",
-        "rgName": "[concat(parameters('topLevelManagementGroupPrefix'), '-vnethub-', parameters('location'))]",
-        "hubName": "[coalesce(parameters('hubName'), concat(parameters('topLevelManagementGroupPrefix'), '-hub-', parameters('location')))]",
+        "vpngwname": "[parameters('vpnGwName')]",
+        "erGwName": "[parameters('erGwName')]",
+        "rgName": "[parameters('rgName')]",
+        "hubName": "[parameters('hubName')]",
         "azVpnGwIpName": "[concat(variables('vpngwname'), '-pip')]",
         "azVpnGwAAIpName": "[concat(variables('vpngwname'), '-pip-002')]",
         "azVpnGwSubnetId": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/GatewaySubnet')]",
